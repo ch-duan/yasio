@@ -13,14 +13,7 @@ using namespace yasio;
 
 int main()
 {
-  try
-  {
-    std::_Xlength_error("ff");
-  }
-  catch (std::exception& ex)
-  {
-    printf("%s", ex.what());
-  }
+  
   int64_t count, start;
   int realloc_hints;
 
