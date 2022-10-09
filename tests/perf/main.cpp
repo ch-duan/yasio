@@ -5,6 +5,8 @@
 #include "pod_vector.h"
 #include "xx_podvector.h"
 
+#include <numeric>
+
 #include <stdio.h>
 
 using namespace yasio;
