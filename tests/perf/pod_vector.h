@@ -54,11 +54,16 @@ template <typename _Ty, typename _Alty = pod_allocator<_Ty>,
           std::enable_if_t<std::is_trivially_destructible_v<_Ty>, int> = 0>
 class pod_vector {
 public:
-
-  using pointer                            = _Ty*;
-  using value_type                         = _Ty;
-  using size_type                          = size_t;
+  using pointer         = _Ty*;
+  using const_pointer   = const _Ty*;
+  using reference       = _Ty&;
+  using const_reference = const _Ty&;
+  using size_type       = size_t;
+  using value_type      = _Ty;
+  using iterator        = _Ty*; // transparent iterator
+  using const_iterator  = const _Ty*;
   pod_vector()                             = default;
+  explicit pod_vector(size_t count) { resize_fit(count); }
   pod_vector(pod_vector const&)            = delete;
   pod_vector& operator=(pod_vector const&) = delete;
 
@@ -92,14 +97,28 @@ public:
     if (new_cap > this->capacity())
       _Reallocate_exactly(new_cap);
   }
+  
+  void resize_fit(size_t new_size)
+  {
+    if (this->capacity() < new_size)
+      _Reallocate_exactly(new_size);
+    _Mylast = _Myfirst + new_size;
+  }
 
-  _Ty& operator[](size_t idx) { return _Myfirst[idx]; }
-  const _Ty& operator[](size_t idx) const { return _Myfirst[idx]; }
-
+  static constexpr size_t max_size() noexcept { return (std::numeric_limits<ptrdiff_t>::max)(); }
+  iterator begin() noexcept { return _Myfirst; }
+  iterator end() noexcept { return _Mylast; }
+  const_iterator begin() const noexcept { return _Myfirst; }
+  const_iterator end() const noexcept { return _Mylast; }
+  pointer data() noexcept { return _Myfirst; }
+  const_pointer data() const noexcept { return _Myfirst; }
   size_t capacity() const noexcept { return _Myend - _Myfirst; }
   size_t size() const noexcept { return _Mylast - _Myfirst; }
-  size_type max_size() const noexcept { return (std::numeric_limits<ptrdiff_t>::max)(); }
   void clear() noexcept { _Mylast = _Myfirst; }
+  void shrink_to_fit() { shrink_to_fit(this->size()); }
+  bool empty() const noexcept { return _Mylast == _Myfirst; }
+  const_reference operator[](size_t index) const { return _Myfirst[index]; }
+  reference operator[](size_t index) { return _Myfirst[index]; }
 
   void shrink_to_fit()
   { // reduce capacity to size, provide strong guarantee
