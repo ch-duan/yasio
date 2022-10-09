@@ -2,7 +2,9 @@
  Copyright (c) Microsoft Corporation.
  
  SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+ 
  Copyright (c) 2022 Bytedance Inc.
+
  https://axmolengine.github.io/
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -127,19 +129,13 @@ private:
     const auto _Oldsize  = static_cast<size_type>(_Mylast - _Myfirst);
 
     if (_Oldsize == max_size())
-    {
       throw std::length_error("pod_vector too long");
-    }
 
     const size_type _Newsize     = _Oldsize + 1;
     const size_type _Newcapacity = _Calculate_growth(_Newsize);
 
     const pointer _Newvec           = _Alty::allocate(_Newcapacity);
-    const pointer _Constructed_last = _Newvec + _Oldsize + 1;
-    pointer _Constructed_first      = _Constructed_last;
-
     new ((void*)(_Newvec + _Oldsize)) _Ty(std::forward<_Valty>(_Val)...);
-    _Constructed_first = _Newvec + _Oldsize;
 
     // at back, provide strong guarantee
     std::move(_Myfirst, _Mylast, _Newvec);
