@@ -61,7 +61,7 @@ if (NOT DEFINED YASIO_HAVE_HALF_FLOAT)
 endif()
 
 if (NOT CXX_STD)
-    set(CXX_STD 11)
+    set(CXX_STD 17)
 endif()
 
 MARK_AS_ADVANCED(YASIO_PROJECT_DIR)
