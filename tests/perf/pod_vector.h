@@ -115,7 +115,6 @@ public:
   size_t capacity() const noexcept { return _Myend - _Myfirst; }
   size_t size() const noexcept { return _Mylast - _Myfirst; }
   void clear() noexcept { _Mylast = _Myfirst; }
-  void shrink_to_fit() { shrink_to_fit(this->size()); }
   bool empty() const noexcept { return _Mylast == _Myfirst; }
   const_reference operator[](size_t index) const { return _Myfirst[index]; }
   reference operator[](size_t index) { return _Myfirst[index]; }
