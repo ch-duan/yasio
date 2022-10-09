@@ -16,7 +16,7 @@ function build_osx()
     cmake --build build_osx --config Release
     
     echo "run test perftest on osx..."
-    build_osx/tests/tcp/Release/perftest
+    build_osx/tests/perf/Release/perftest
     
     exit 0
 }
