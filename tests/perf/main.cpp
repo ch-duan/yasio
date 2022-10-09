@@ -96,7 +96,7 @@ int main()
            (yasio::highp_clock() - start) / (double)std::micro::den);
 
 
-    tf("Testing ax_pod_vector 2 ...");
+    printf ("Testing ax_pod_vector 2 ...");
     count = 0;
     realloc_hints = 0;
     start = yasio::highp_clock();
