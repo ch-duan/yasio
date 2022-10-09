@@ -93,6 +93,35 @@ int main()
     printf("--> count: %lld, cost: %lf(s)\n", count,
            (yasio::highp_clock() - start) / (double)std::micro::den);
 
+
+    tf("Testing ax_pod_vector 2 ...");
+    count = 0;
+    realloc_hints = 0;
+    start = yasio::highp_clock();
+    for (int i = 0; i < NUM_TIMES; ++i)
+    {
+      ax::pod_vector<int> pv(1000);
+      std::iota(pv.begin(), pv.end(), 0);
+      count += std::accumulate(pv.begin(), pv.end(), 0);
+    }
+    printf("--> count: %lld, cost: %lf(s), realloc_hits: %d\n", count,
+           (yasio::highp_clock() - start) / (double)std::micro::den, realloc_hints);
+
+    
+    /* std vector */
+    printf("Testing std_vector 2...");
+    count = 0;
+    start = yasio::highp_clock();
+    for (int i = 0; i < NUM_TIMES; ++i)
+    {
+      std::vector<int> pv(1000);
+      std::iota(pv.begin(), pv.end(), 0);
+      count += std::accumulate(pv.begin(), pv.end(), 0);
+    }
+
+    printf("--> count: %lld, cost: %lf(s)\n", count,
+           (yasio::highp_clock() - start) / (double)std::micro::den);
+
     printf("\n\n");
   }
   return 0;
