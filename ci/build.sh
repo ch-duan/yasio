@@ -15,8 +15,8 @@ function build_osx()
     cmake .. -GXcode -Bbuild_osx -DYASIO_SSL_BACKEND=1 -DYASIO_HAVE_CARES=ON
     cmake --build build_osx --config Release
     
-    echo "run test tcptest on osx..."
-    build_osx/tests/tcp/Release/tcptest
+    echo "run test perftest on osx..."
+    build_osx/tests/tcp/Release/perftest
     
     exit 0
 }
@@ -45,12 +45,9 @@ function build_linux()
     cmake .. -G "Unix Makefiles" -Bbuild_linux -DCMAKE_BUILD_TYPE=Release -DYASIO_SSL_BACKEND=2 -DYASIO_HAVE_KCP=ON -DYASIO_HAVE_CARES=ON -DYASIO_ENABLE_ARES_PROFILER=ON -DYAISO_BUILD_NI=YES -DCXX_STD=17 -DYASIO_VERBOSE_LOG=ON -DYASIO_BUILD_WITH_LUA=ON -DBUILD_SHARED_LIBS=ON
 
     cmake --build build_linux -- -j `nproc`
-    
-    echo "run test issue201 on linux..."
-    build_linux/tests/issue201/issue201
-    
-    echo "run test http on linux..."
-    build_linux/tests/http/httptest
+      
+    echo "run test perftest on linux..."
+    build_linux/tests/perf/perftest
     
     exit 0
 }
