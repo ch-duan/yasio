@@ -23,7 +23,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  The pod_vector concepts:
-   a. only accept pod type
+   a. only accept pod types
    b. support release memory ownership with `release_pointer`
    c. support pod_allocater with C(realloc) or C++(new/delete)
 Copy of https://github.com/microsoft/STL/blob/main/stl/inc/vector but for pod types and only provide 'emplace_back'
@@ -34,6 +34,7 @@ Copy of https://github.com/microsoft/STL/blob/main/stl/inc/vector but for pod ty
 #include <new>
 #include <type_traits>
 #include <stdexcept>
+#include <limits>
 
 namespace ax
 {
