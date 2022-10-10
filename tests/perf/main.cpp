@@ -26,7 +26,6 @@ int main()
     /* xx pod vector */
     printf("Testing xx_pod_vector...");
     count = 0;
-    realloc_hints = 0;
     start = yasio::highp_clock();
     for (int i = 0; i < NUM_TIMES; ++i)
     {
@@ -42,8 +41,8 @@ int main()
       }
       // realloc_hints = pv.realloc_hits;
     }
-    printf("--> count: %lld, cost: %lf(s), realloc_hits: %d\n", count,
-           (yasio::highp_clock() - start) / (double)std::micro::den, realloc_hints);
+    printf("--> count: %lld, cost: %lf(s)\n", count,
+           (yasio::highp_clock() - start) / (double)std::micro::den);
 
     /* ax pod vector */
     printf("Testing ax_pod_vector...");
@@ -63,8 +62,8 @@ int main()
         count += pv[j];
       }
     }
-    printf("--> count: %lld, cost: %lf(s), realloc_hits: %d\n", count,
-           (yasio::highp_clock() - start) / (double)std::micro::den, realloc_hints);
+    printf("--> count: %lld, cost: %lf(s)\n", count,
+           (yasio::highp_clock() - start) / (double)std::micro::den);
 
     
     /* std vector */
@@ -99,8 +98,8 @@ int main()
       std::iota(pv.begin(), pv.end(), 0);
       count += std::accumulate(pv.begin(), pv.end(), 0);
     }
-    printf("--> count: %lld, cost: %lf(s), realloc_hits: %d\n", count,
-           (yasio::highp_clock() - start) / (double)std::micro::den, realloc_hints);
+    printf("--> count: %lld, cost: %lf(s)\n", count,
+           (yasio::highp_clock() - start) / (double)std::micro::den);
 
     
     /* std vector */
