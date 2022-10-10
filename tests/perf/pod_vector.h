@@ -136,7 +136,9 @@ public:
   pointer release_pointer() noexcept
   {
     auto ptr = _Myfirst;
-    memset(this, 0, sizeof(*this));
+    _Myfirst = nullptr;
+    _Mylast  = nullptr;
+    _Myend   = nullptr;
     return ptr;
   }
 
@@ -152,14 +154,15 @@ private:
     const size_type _Newsize     = _Oldsize + 1;
     const size_type _Newcapacity = _Calculate_growth(_Newsize);
 
-    const pointer _Newvec           = _Alty::allocate(_Newcapacity);
-    new ((void*)(_Newvec + _Oldsize)) _Ty(std::forward<_Valty>(_Val)...);
+    const pointer _Newvec        = _Alty::allocate(_Newcapacity);
+    const pointer _Newptr        = _Newvec + _Oldsize;
+    new ((void*)_Newptr) _Ty(std::forward<_Valty>(_Val)...);
 
     // at back, provide strong guarantee
     std::move(_Myfirst, _Mylast, _Newvec);
 
     _Change_array(_Newvec, _Newsize, _Newcapacity);
-    return _Newvec + _Oldsize;
+    return _Newptr;
   }
 
   void _Reallocate_exactly(size_t _Newcapacity)
