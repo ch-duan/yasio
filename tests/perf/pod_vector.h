@@ -82,10 +82,9 @@ public:
 
   void swap(pod_vector& rhs) noexcept
   {
-    char _Tmp[sizeof(rhs)];
-    memcpy(_Tmp, &rhs, sizeof(rhs));
-    memcpy(&rhs, this, sizeof(rhs));
-    memcpy(this, _Tmp, sizeof(_Tmp));
+    std::swap(_Myfirst, rhs._Myfirst);
+    std::swap(_Mylast, rhs._Mylast);
+    std::swap(_Myend, rhs._Myend);
   }
 
   ~pod_vector() { _Tidy(); }
